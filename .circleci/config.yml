@@ -7,6 +7,8 @@ orbs:
 # Orchestrate or schedule a set of jobs
 jobs:
   print_my_name:
+    docker:
+      - image: circleci/node:13.8.0
     steps:
       - run: echo My name is $NAME
   print_hello:
@@ -25,6 +27,7 @@ workflows:
     # Run the welcome/run job in its own container
     jobs:
       - welcome/run
+      - print_my_name
       - print_hello
       - print_world:
           requires:
