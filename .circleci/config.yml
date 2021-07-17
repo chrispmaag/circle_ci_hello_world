@@ -1,34 +1,17 @@
 version: 2.1
 
-commands:
-  print_pipeline_id:
-    description: "Prints the workflow_id"
-    steps:
-      - run: echo $CIRCLE_WORKFLOW_ID
 jobs:
-  save_hello_world_output:
-    docker:
+  error_handling_job:
+    docker: 
       - image: circleci/node:13.8.0
     steps:
-      - run: echo "hello world" > ~/output.txt
-      - print_pipeline_id
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - output.txt
-
-  print_output_file:
-    docker:
-      - image: circleci/node:13.8.0
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run: cat ~/output.txt
+      - run: return 1
+      - run: 
+          name: When Something Fails
+          command: echo "Hello Error!"
+          when: on_fail
 
 workflows:
   my_workflow:
     jobs:
-      - save_hello_world_output
-      - print_output_file:
-          requires:
-            - save_hello_world_output
+      - error_handling_job
