@@ -4,7 +4,7 @@ Ec2Instance:
   Properties:
     SecurityGroups:
       - !Ref InstanceSecurityGroup
-    KeyName: udacity-cloud-dev
+    KeyName: udacity
     ImageId: 'ami-068663a3c619dd892' # check on this value
   
 InstanceSecurityGroup:
